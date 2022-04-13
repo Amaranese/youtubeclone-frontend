@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useSelector } from "react-redux";
+import { ThemeProvider } from "styled-components";
+import { ToastContainer } from "react-toastify";
+import GlobalStyle from "./styles/GlobalStyle";
+import { darkTheme } from "./styles/theme";
+import Router from "./Router";
+import Auth from "./components/Auth";
+import "react-toastify/dist/ReactToastify.css";
 
-function App() {
+const App = () => {
+  const { token } = useSelector((state) => state.user.data);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <GlobalStyle />
+      <ToastContainer
+        autoClose={2500}
+        position="top-right"
+        closeButton={false}
+      />
+      {token ? <Router /> : <Auth />}
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
